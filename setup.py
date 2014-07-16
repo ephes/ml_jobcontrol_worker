@@ -20,7 +20,7 @@ setup(
     author_email='jochen-mljobcontrol@wersdoerfer.de',
     include_package_data=True,
     install_requires = ['requests>=0.14.0'],
-    py_modules=['ml_jobcontrol'],
+    packages=['ml_jobcontrol'],
     url='https://github.com/ephes/ml_jobcontrol_worker',
     license='BSD licence, see LICENCE.txt',
     description='Get jobs from ml_jobcontrol and submit results',
