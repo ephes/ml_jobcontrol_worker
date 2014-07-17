@@ -6,6 +6,7 @@ import logging
 import requests
 
 from pprint import pprint
+from importlib import import_module
 from urlparse import urljoin, urlparse
 
 from .exceptions import MLJobControlException
@@ -44,6 +45,12 @@ class MLJob(object):
         self.dataset_path = os.path.join(datasets_path, dataset["name"])
         filename = os.path.basename(urlparse(dataset["data_url"]).path)
         self.data_path = os.path.join(self.dataset_path, filename)
+
+    def get_model(self):
+        module, model_class = self.model_import_path.rsplit('.', 1)
+        module = import_module(module)
+        model_class = getattr(module, model_class)
+        return model_class(*self.model_args, **self.model_kwargs)
 
     def get_patch_payload(self):
         payload = {
