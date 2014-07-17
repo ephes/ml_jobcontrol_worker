@@ -102,7 +102,7 @@ class MLJobsWorker(object):
 
     def create_score(self, score):
         payload = {"name": score}
-        r = self.session.post(self.urls.mlscore, data=payload)
+        r = self.session.post(self.urls.mlscore, data=json.dumps(payload))
         if r.status_code == requests.codes.created:
             score = r.json()
             self.scores[score["name"]] = score["url"]
