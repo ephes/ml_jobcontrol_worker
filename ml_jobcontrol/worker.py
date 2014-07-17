@@ -40,7 +40,7 @@ class MLJob(object):
 
         # extract path information
         testset = job["classification_testset"]
-        dataset = testset["mldataset"]
+        self.dataset = dataset = testset["mldataset"]
         datasets_path = os.path.join(self.local_path, "datasets")
         self.dataset_path = os.path.join(datasets_path, dataset["name"])
         filename = os.path.basename(urlparse(dataset["data_url"]).path)
@@ -69,7 +69,7 @@ class MLJob(object):
                 os.makedirs(self.dataset_path)
 
             # fetch potentially large file (without using main memory)
-            r = requests.get(dataset["data_url"], stream=True)
+            r = requests.get(self.dataset["data_url"], stream=True)
             if r.status_code == requests.codes.ok:
                 with open(self.data_path, 'wb') as f:
                     for chunk in r.iter_content(1024):
