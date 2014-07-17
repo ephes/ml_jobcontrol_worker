@@ -28,6 +28,10 @@ class MLJob(object):
         self.train_num = job["classification_testset"]["train_num"]
         self.test_num = job["classification_testset"]["test_num"]
         self.url = job["url"]
+        self.model_import_path = job["model_config"]["mlmodel"]["import_path"]
+        self.model_config = json.loads(job["model_config"]["json_config"])
+        self.model_args = self.model_config["args"]
+        self.model_kwargs = self.model_config["kwargs"]
 
         # urls for put/patch requests
         self.testset_url = job["mlclassification_testset"]

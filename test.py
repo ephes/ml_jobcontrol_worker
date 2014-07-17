@@ -2,6 +2,8 @@
 
 import argparse
 
+from pprint import pprint
+
 from ml_jobcontrol import Worker
 
 def main():
@@ -15,6 +17,10 @@ def main():
     worker = Worker(args.url, args.user, args.password,
         args.datadir)
     job = worker.next_job()
+    pprint(job.model_import_path)
+    pprint(job.model_config)
+    pprint(job.model_args)
+    pprint(job.model_kwargs)
     result = {
         "f1": 0.666,
         "precision": 0.666,
