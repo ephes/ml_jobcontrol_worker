@@ -83,7 +83,9 @@ class MLJobsWorker(object):
         self.local_path = local_path
         self.session = requests.Session()
         self.session.headers.update({
-            "Authorization": "Token %s" % auth_token
+            "Authorization": "Token %s" % auth_token,
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
         })
         self.fetch_urls(base_url)
         self.fetch_scores()
@@ -104,7 +106,8 @@ class MLJobsWorker(object):
 
     def create_score(self, score):
         payload = {"name": score}
-        r = self.session.post(self.urls.mlscore, data=json.dumps(payload))
+        payload = json.dumps(payload)
+        r = self.session.post(self.urls.mlscore, data=payload)
         if r.status_code == requests.codes.created:
             score = r.json()
             self.scores[score["name"]] = score["url"]
@@ -126,7 +129,8 @@ class MLJobsWorker(object):
     def mark_job(self, job, status):
         payload = job.get_patch_payload()
         payload["status"] = status
-        r = self.session.patch(job.url, data=json.dumps(payload))
+        payload = json.dumps(payload)
+        r = self.session.patch(job.url, data=payload)
         return r.status_code == requests.codes.ok
 
     def next_job(self):
