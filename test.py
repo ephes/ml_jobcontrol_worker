@@ -5,6 +5,7 @@ import argparse
 from pprint import pprint
 
 from ml_jobcontrol import Worker
+from ml_jobcontrol.config import activate_logging
 
 def main():
     parser = argparse.ArgumentParser()
